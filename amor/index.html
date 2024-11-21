@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perdóname, mi amor</title>
+    <style>
+         body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffebf2;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            transform: scale(0.75);  /* Reducción del tamaño al 75% */
+            transform-origin: top center;  /* Ajusta la escala desde la parte superior central */
+        }
+
+        h1 {
+            color: #e91e63;
+            margin-top: 50px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 20px auto;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .heart {
+            font-size: 100px;
+            color: #e91e63;
+            animation: heartbeat 1s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 20px 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #e91e63;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #d81b60;
+        }
+
+        img {
+            margin-top: 30px;
+            max-width: 80%;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Media Query para pantallas móviles */
+        @media (max-width: 768px) {
+            body {
+                transform: scale(1);  /* Escala completa en pantallas móviles */
+                transform-origin: top center;
+            }
+
+            h1 {
+                font-size: 24px;  /* Ajustar tamaño de título en pantallas móviles */
+            }
+
+            .btn {
+                padding: 12px 25px;  /* Ajustar tamaño de los botones en pantallas móviles */
+            }
+
+            img {
+                max-width: 100%;  /* Hacer que las imágenes ocupen todo el ancho de la pantalla */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Perdóname, Mi Amor Jahaira</h1>
+    <div class="heart">❤️</div>
+    <p id="message">
+        Mi vida, cometí un error y no hay día que no me arrepienta. 
+        Solo quiero que sepas que eres lo más importante para mí y haría lo que fuera por verte sonreír otra vez. 
+        Por favor, dame la oportunidad de demostrarte cuánto te amo.
+    </p>
+    <button class="btn" id="prevButton">Anterior</button>
+    <button class="btn" id="nextButton">Siguiente</button>
+    <button onclick="playMusic()">presiona aqui</button>
+    <audio id="backgroundMusic" loop>
+        <source src="amor.mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
+
+    <script>
+        const phrases = [
+        "Mi amor, perdona mi error, no hay mayor pena que este dolor.",
+            "Sin ti la vida perdió su color, por favor regresa, mi único amor.",
+            "Te lastimé sin intención, dame otra oportunidad de redención.",
+            "Eres mi luz, mi salvación, contigo late mi corazón.",
+            "Quiero enmendar cada tropiezo, por ti lucharé, lo prometo y expreso.",
+            "Perdona mis fallas, mi distracción, te extraño con toda mi pasión.",
+            "Sin tu sonrisa no hay alegría, te necesito cada día.",
+            "Cada lágrima me hace sentir, que sin ti no puedo vivir.",
+            "No soy perfecto, lo sé bien, pero mi amor por ti no tiene fin.",
+            "Dame tu mano, volvamos a empezar, prometo cuidarte y nunca fallar.",
+            "Sin ti soy un barco sin dirección, eres mi ancla, mi inspiración.",
+            "En mis sueños siempre estás, perdóname, dame paz.",
+            "Eres mi todo, mi gran verdad, sin ti solo hay oscuridad.",
+            "Quiero sanar lo que rompí, hacerte feliz, quedarme junto a ti.",
+            "No hay excusas para mi error, solo un amor que clama perdón.",
+            "Regresa a mí, mi gran amor, prometo llenarte de alegría y calor.",
+            "Eres mi norte, mi razón de ser, contigo lo quiero todo volver a hacer.",
+            "Te extraño tanto, no puedo mentir, sin ti mi mundo dejó de existir.",
+            "Por favor, mi vida, vuelve a mí, sin ti no hay futuro ni porvenir.",
+            "Eres mi sol, mi eterna pasión, por favor escucha mi corazón.",
+            "El tiempo sin ti se vuelve eterno, dame otra oportunidad de amor eterno.",
+            "Cada día sin ti es un tormento, regresa y calmemos este sufrimiento.",
+            "Tus abrazos son mi refugio, sin ellos me pierdo en un mundo oscuro.",
+            "Cometí errores, no lo niego, pero te amo y por ti ruego.",
+            "Tu ausencia duele más que el frío, vuelve a ser mi calor, te lo pido.",
+            "Contigo aprendí lo que es el amor, ahora quiero demostrarte mi valor.",
+            "Mis palabras no bastan para expresar, cuánto te amo y te quiero recuperar.",
+            "Eres mi rayo de luz, mi inspiración, perdóname, eres mi razón.",
+            "No hay día que no piense en ti, mi vida no tiene sentido sin ti.",
+            "Regresa, por favor, mi corazón te llama, porque sin ti no hay calma.",
+            "Eres la única dueña de mi amor, por favor alivia este dolor.",
+            "Te extraño con cada latido, no hay amor más grande que este que he vivido.",
+            "Mi amor por ti no tiene final, perdóname y juntos volvamos a empezar.",
+            "Sin ti mi mundo no tiene color, vuelve a ser mi gran amor.",
+            "Por ti lucharé cada día, porque sin ti no hay alegría.",
+            "Mis errores no definen mi amor, te necesito, mi único sol.",
+            "Tu ausencia es un castigo cruel, dame otra oportunidad, mi miel.",
+            "Te amo más de lo que puedo decir, sin ti no sé cómo vivir.",
+            "Cada día pienso en ti, y en cómo enmendar lo que destruí.",
+            "Eres mi hogar, mi lugar seguro, vuelve a ser mi presente y futuro.",
+            "Quiero construir un futuro contigo, lleno de amor y sin castigo.",
+            "Tú eres mi sueño, mi realidad, perdóname, eres mi felicidad.",
+            "Cada lágrima que derramas, duele más que mi alma.",
+            "Te prometo cambiar, cada día mejorar, solo por ti, mi razón de amar.",
+            "Eres mi vida, mi esperanza, regresa y devolvamos la confianza.",
+            "Tu amor es mi mayor tesoro, no quiero perderte, lo juro y lloro.",
+            "Vuelve a ser mi compañera de vida, sin ti mi alma está perdida.",
+            "Por siempre te amaré, sin reservas ni dudas, por favor vuelve, mi fortuna."
+        ];
+        let currentIndex = 0;
+        const message = document.getElementById("message");
+        const prevButton = document.getElementById("prevButton");
+        const nextButton = document.getElementById("nextButton");
+        function playMusic() {
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        backgroundMusic.play().catch(error => {
+            console.log("Error al intentar reproducir música:", error);
+        });
+    }
+        function updateMessage() {
+            message.textContent = phrases[currentIndex];
+        }
+
+        prevButton.addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateMessage();
+            }
+        });
+
+        nextButton.addEventListener("click", () => {
+            if (currentIndex < phrases.length - 1) {
+                currentIndex++;
+                updateMessage();
+            }
+        });
+
+        // Intentar reproducir el audio automáticamente al cargar la página
+        const backgroundMusic = document.getElementById("backgroundMusic");
+        window.addEventListener("load", () => {
+            backgroundMusic.play().catch(error => {
+                console.log("La reproducción automática está bloqueada por el navegador:", error);
+            });
+        });
+    </script>
+</body>
+</html>
